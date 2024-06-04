@@ -1,0 +1,67 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+            data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+            <fa-icon icon="person" size="lg" class="p-2"></fa-icon>
+            <span class="fs-5">Empleado</span>
+        </a>
+        <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+            <li class="sidebar-item">
+                
+                <a [routerLink]="['empleado']" class="sidebar-link">
+                  <fa-icon [icon]="['far','circle-dot']" size="sm"></fa-icon>
+                   Lista</a>
+            </li>
+            <li class="sidebar-item">
+                <a [routerLink]="['empleado/salario']" class="sidebar-link">
+                  <fa-icon [icon]="['far','circle-dot']" size="sm"></fa-icon>
+                  Modificar salario</a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-item">
+      <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+          data-bs-target="#pago" aria-expanded="false" aria-controls="auth">
+          <fa-icon icon="money-bill" size="lg" class="p-2"></fa-icon>
+          <span class="fs-5">Salario</span>
+      </a>
+      <ul id="pago" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+          <li class="sidebar-item">
+              
+              <a [routerLink]="['salario/pago']" class="sidebar-link">
+                <fa-icon [icon]="['far','circle-dot']" size="sm"></fa-icon>
+                 Calcular Pago</a>
+          </li>
+      </ul>
+  </li>
+  </ul>
+  <!-- <div class="sidebar-footer">
+      <a href="#" class="sidebar-link">
+          <i class="lni lni-exit"></i>
+          <span>Logout</span>
+      </a>
+  </div> -->
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isHandset$ | async) {
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      <span>Mirai-webapp</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

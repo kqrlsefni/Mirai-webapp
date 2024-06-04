@@ -1,0 +1,455 @@
+<div class="d-flex align-content-center m-4 p-2 flex-column">
+    <h2 class="fw-bold">LISTA DE EMPLEADOS</h2>
+    <div class="div col-md-4 m-2">
+      <button class="btn btn-primary btn-lg" data-bs-toggle="modal" 
+      data-bs-target="#modalNew" (click)="newEmpleado()">
+          <fa-icon icon="newspaper" size="sm"></fa-icon>
+</button>
+    </div>
+    
+    <table class="table table-bordered border-black table-light table-sm">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col" class="col-1 text-center">Codigo</th>
+            <th scope="col" class="col-1 text-center">DNI</th>
+            <th scope="col" class="col-3 text-center">Empleado</th>
+            <th scope="col" class="col-2 text-center">Area</th>
+            <th scope="col" class="col-2 text-center">Salario Basico</th>
+            <th scope="col" class="col-1 text-center">F. Ingreso</th>
+            <th scope="col" class="col-md-2 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(empleado of empleados; track empleado.id){
+            <tr>
+              <th scope="row">{{empleado.codigo}}</th>
+              <td>{{empleado.dni}}</td>
+              <td>{{empleado.nombreCompleto}}</td>
+              <td>{{empleado.area.nombre}}</td>
+              <td>{{empleado.salario.salBasico}}</td>
+              <td>{{empleado.fechaIngreso}}</td>
+              <td>
+                  <button type="button" class="btn btn-info btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalInfo" (click)="empleadoDetail(empleado.id)">
+                      <fa-icon icon="eye" size="sm"></fa-icon>
+                  </button>
+                  <button class="btn btn-warning btn-sm mx-1" data-bs-toggle="modal" 
+                  data-bs-target="#modalEdit" (click)="empleadoEdit(empleado.id)">
+                      <fa-icon icon="pencil" size="sm"></fa-icon>
+                  </button>
+                  <button class="btn btn-danger btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalDelete" (click)="empleadoEliminar(empleado.id)">
+                      <fa-icon icon="trash" size="sm"></fa-icon>
+                  </button>
+              </td>
+              
+            </tr>
+          }
+          
+        </tbody>
+      </table>
+
+<!-- Modal Info-->
+<div class="modal fade" id="modalInfo" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles del Empleado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4 d-flex align-items-center">
+            <h4 class="fw-bold">CODIGO:</h4>
+            <span class="ms-2 mb-3 text-primary fw-bold">{{ empleado.codigo}}</span>
+          </div>
+          <div class="col-md-8 d-flex align-items-center">
+            <h4 class="fw-bold">EMPLEADO:</h4>
+            <span class="ms-2 mb-3 text-primary fw-bold">{{ empleado.nombreCompleto}}</span>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> 
+              <div class="d-flex align-items-start flex-column mb-2">
+                <h4 class="fw-bold m-0 p-1">DNI:</h4>
+                <span class="text-primary fw-bold">{{ empleado.dni}}</span>
+              </div>
+              <div class="d-flex align-items-start flex-column mb-2">
+                <h4 class="fw-bold m-0 p-1">AREA:</h4>
+                <span class="text-primary fw-bold">{{ empleado.area.nombre}}</span>
+              </div>
+              <div class="d-flex align-items-start flex-column mb-2">
+                <h4 class="fw-bold m-0 p-1">SALARIO BASICO:</h4>
+                <span class="text-success fw-bold">{{ empleado.salario.salBasico}}</span>
+              </div>
+              <div class="d-flex align-items-start flex-column mb-2">
+                <h4 class="fw-bold m-0 p-1">GENERO:</h4>
+                <span class="text-primary fw-bold">{{ empleado.genero}}</span>
+              </div>
+              <div class="d-flex align-items-start flex-column mb-2">
+                <h4 class="fw-bold m-0 p-1">FECHA INGRESO:</h4>
+                <span class="text-primary fw-bold">{{ empleado.fechaIngreso}}</span>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                <div class="col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">CONTRATO:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.contrato.nombre}}</span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">FECHA INICIO:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.fechaIngreso}}</span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">FECHA FIN:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.contrato.fechaFin}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                <div class="col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">JORNADA:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.jornada.nombre}}</span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">HORAS:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.jornada.horas}}</span>
+                  </div>
+                </div>  
+              </div>
+              <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                <div class="div col-md-5">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">FECHA NACIMIENTO:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.fechaNacimiento}}</span>
+                  </div>
+                </div>
+                <div class="div col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">EDAD:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.edad}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                <div class="div col-md-4">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">DIAS:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.antDias}}</span>
+                  </div>
+                </div>
+                <div class="div col-md-6">
+                  <div class="d-flex align-items-start flex-column mb-2">
+                    <h4 class="fw-bold m-0 p-1">ANTIGUEDAD:</h4>
+                    <span class="text-primary fw-bold">{{ empleado.antiguedad}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal New-->
+<div class="modal fade" id="modalNew" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Empleado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form" #newForm="ngForm" (submit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-3 d-flex align-items-center">
+              <h4 class="fw-bold mt-3">Codigo:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="codigo" [(ngModel)]="empleadoReq.codigo" disabled>
+            </div>
+            <div class="col-md-9 d-flex align-items-center">
+              <h4 class="fw-bold mt-3">Nombres:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="nombres"  [(ngModel)]="empleadoReq.nombres" #nombres="ngModel" required pattern="/^[a-zA-Z\s]*$/" (keydown)="letterInput($event)">
+              <div [hidden]="nombres.valid || nombres.pristine"
+             class="alert alert-danger">
+          Name is required
+        </div>
+              <h4 class="fw-bold mt-3">Ape. Paterno:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="apePaterno" [(ngModel)]="empleadoReq.apePaterno" (keydown)="letterInput($event)" required>
+              <h4 class="fw-bold mt-3">Ape. Materno:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="apeMaterno" [(ngModel)]="empleadoReq.apeMaterno" (keydown)="letterInput($event)" required>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3"> 
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">DNI:</h4>
+                  <input type="text" class="form-control custom-input mx-2" name="dni" [(ngModel)]="empleadoReq.dni" minlength="8" maxlength="8" (keydown)="numberInput($event)" required>
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">Area:</h4>
+                  <select class="form-select custom-select" id="exampleSelect" (change)="areaSeleccionada($event)" name="areaId" [(ngModel)]="empleadoReq.areaId">
+                    <option value="-1">Seleccione...</option>
+                    @for(area of areas; track area.id){
+                      <option value="{{area.id}}">{{area.nombre}}</option>
+                    }
+                    
+                  </select>
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <fieldset ngModelGroup="salario">
+                    <h4 class="fw-bold m-0 p-1">Salario Basico:</h4>
+                    <input type="text" class="form-control custom-input mx-2" [(ngModel)]="empleadoReq.salario.salBasico" name="salBasico" pattern="[0-9]*" (keydown)="numberInput($event)" required disabled>
+                  </fieldset>
+                  
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">Genero:</h4>
+                  <div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genero" id="inlineRadio1" value="Masculino" [(ngModel)]="empleadoReq.genero">
+                      <label class="form-check-label" for="inlineRadio1">Masculino</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genero" id="inlineRadio2" value="Femenino" [(ngModel)]="empleadoReq.genero">
+                      <label class="form-check-label" for="inlineRadio2">Femenino</label>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">Fecha Ingreso:</h4>
+                  <input type="date" name="fechaIngreso" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.fechaIngreso" (ngModelChange)="ingresoChange($event)">
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2" ngModelGroup="contrato">
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Contrato:</h4>
+                      <select class="form-select custom-select" id="exampleSelect" name="nombre" [(ngModel)]="empleadoReq.contrato.nombre">
+                        <option value="-1">Seleccione...</option>
+                          <option value="Plazo Determinado">Plazo Determinado</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                    <div class="col-md-4">
+                      <div class="d-flex align-items-start flex-column mb-2">
+                        <h4 class="fw-bold m-0 p-1">Fecha Inicio:</h4>
+                        <input type="date" name="fechaInicio" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.contrato.fechaInicio" (ngModelChange)="inicioChange()">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="d-flex align-items-start flex-column mb-2">
+                        <h4 class="fw-bold m-0 p-1">Fecha Fin:</h4>
+                        <input type="date" name="fechaFin" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.contrato.fechaFin" [min]="minFechaFin">
+                      </div>
+                    </div>
+                  
+                </div>
+                <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Jornada:</h4>
+                      <select class="form-select custom-select" id="exampleSelect" (change)="jornadaSeleccionada($event)" name="jorLaboral" [(ngModel)]="empleadoReq.jorLaboral">
+                        <option value="-1">Seleccione...</option>
+                        @for(jornada of jornadas; track jornada.id){
+                          <option value="{{jornada.id}}">{{jornada.nombre}}</option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Horas:</h4>
+                      <input type="text" class="form-control custom-input mx-2" [(ngModel)]="jornadaHoras" name="jornadaHoras" disabled required (keydown)="numberInput($event)" required>
+                    </div>
+                  </div>  
+                </div>
+                <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                  <div class="div col-md-5">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Fecha Nacimiento:</h4>
+                      <input type="date" name="fechaNacimiento" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.fechaNacimiento">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+        </form>
+    </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit-->
+<div class="modal fade" id="modalEdit" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Empleado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form" #editForm="ngForm" (submit)="editar()">
+          <div class="row">
+            <div class="col-md-3 d-flex align-items-center">
+              <h4 class="fw-bold mt-3">Codigo:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="codigo" [(ngModel)]="empleadoReq.codigo" disabled>
+            </div>
+            <div class="col-md-9 d-flex align-items-center">
+              <h4 class="fw-bold mt-3">Nombres:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="nombres"  [(ngModel)]="empleadoReq.nombres" #nombres="ngModel" (keydown)="letterInput($event)" required>
+              <div [hidden]="nombres.valid || nombres.pristine"
+             class="alert alert-danger">
+          Name is required
+        </div>
+              <h4 class="fw-bold mt-3">Ape. Paterno:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="apePaterno" [(ngModel)]="empleadoReq.apePaterno" (keydown)="letterInput($event)" required>
+              <h4 class="fw-bold mt-3">Ape. Materno:</h4>
+              <input type="text" class="form-control custom-input mx-2" name="apeMaterno" [(ngModel)]="empleadoReq.apeMaterno" (keydown)="letterInput($event)" required>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3"> 
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">DNI:</h4>
+                  <input type="text" class="form-control custom-input mx-2" name="dni" [(ngModel)]="empleadoReq.dni" minlength="8" maxlength="8" (keydown)="numberInput($event)" required>
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">Area:</h4>
+                  <select class="form-select custom-select" id="exampleSelect" (change)="areaSeleccionada($event)" name="areaId" [(ngModel)]="empleadoReq.areaId">
+                    <option value="">Seleccione...</option>
+                    @for(area of areas; track area.id){
+                      <option value="{{area.id}}">{{area.nombre}}</option>
+                    }
+                    
+                  </select>
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <fieldset ngModelGroup="salario">
+                    <h4 class="fw-bold m-0 p-1">Salario Basico:</h4>
+                    <input type="text" class="form-control custom-input mx-2" [(ngModel)]="empleadoReq.salario.salBasico" name="salBasico" (keydown)="numberInput($event)" disabled required>
+                  </fieldset>
+                  
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">Genero:</h4>
+                  <div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genero" id="inlineRadio1" value="Masculino" [(ngModel)]="empleadoReq.genero">
+                      <label class="form-check-label" for="inlineRadio1">Masculino</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="genero" id="inlineRadio2" value="Femenino" [(ngModel)]="empleadoReq.genero">
+                      <label class="form-check-label" for="inlineRadio2">Femenino</label>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="d-flex align-items-start flex-column">
+                  <h4 class="fw-bold m-0 p-1">Fecha Ingreso:</h4>
+                  <input type="date" name="fechaIngreso" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.fechaIngreso" (ngModelChange)="changeFI($event)">
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2" ngModelGroup="contrato">
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Contrato:</h4>
+                      <select class="form-select custom-select" id="exampleSelect" name="nombre" [(ngModel)]="empleadoReq.contrato.nombre">
+                        <option value="">Seleccione...</option>
+                          <option value="Plazo Determinado">Plazo Determinado</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                    <div class="col-md-4">
+                      <div class="d-flex align-items-start flex-column mb-2">
+                        <h4 class="fw-bold m-0 p-1">Fecha Inicio:</h4>
+                        <input type="date" name="fechaInicio" id="" class="form-control custom-input"  [(ngModel)]="empleadoReq.contrato.fechaInicio">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="d-flex align-items-start flex-column mb-2">
+                        <h4 class="fw-bold m-0 p-1">Fecha Fin:</h4>
+                        <input type="date" name="fechaFin" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.contrato.fechaFin">
+                      </div>
+                    </div>
+                  
+                </div>
+                <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Jornada:</h4>
+                      <select class="form-select custom-select" id="exampleSelect" (change)="jornadaSeleccionada($event)" name="jorLaboral" [(ngModel)]="empleadoReq.jorLaboral">
+                        <option value="">Seleccione...</option>
+                        @for(jornada of jornadas; track jornada.id){
+                          <option value="{{jornada.id}}">{{jornada.nombre}}</option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Horas:</h4>
+                      <input type="text" class="form-control custom-input mx-2" [(ngModel)]="jornadaHoras" name="jornadaHoras" disabled (keydown)="numberInput($event)" required>
+                    </div>
+                  </div>  
+                </div>
+                <div class="row border border-2 rounded-4 bg-dark bg-opacity-10 mb-2">
+                  <div class="div col-md-5">
+                    <div class="d-flex align-items-start flex-column mb-2">
+                      <h4 class="fw-bold m-0 p-1">Fecha Nacimiento:</h4>
+                      <input type="date" name="fechaNacimiento" id="" class="form-control custom-input" [(ngModel)]="empleadoReq.fechaNacimiento">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+        </form>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade" id="modalDelete" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xs">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Empleado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estas seguro de eliminar al empleado?
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="eliminar()" data-bs-dismiss="modal">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

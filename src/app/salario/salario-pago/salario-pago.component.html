@@ -1,0 +1,122 @@
+<div class="d-flex align-content-center m-4 p-2 flex-column">
+    <h2 class="fw-bold">CALCULAR PAGO</h2>
+    
+    <table class="table table-bordered border-black table-light table-sm">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col" class="col-1 text-center">Codigo</th>
+            <th scope="col" class="col-1 text-center">DNI</th>
+            <th scope="col" class="col-3 text-center">Empleado</th>
+            <th scope="col" class="col-2 text-center">Area</th>
+            <th scope="col" class="col-2 text-center">Salario Basico</th>
+            <th scope="col" class="col-2 text-center">Salario Neto</th>
+            <th scope="col" class="col-md-1 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(empleado of empleados; track empleado.id){
+            <tr>
+              <th scope="row" class="align-middle">{{empleado.codigo}}</th>
+              <td class="align-middle">{{empleado.dni}}</td>
+              <td class="align-middle">{{empleado.nombreCompleto}}</td>
+              <td class="align-middle">{{empleado.area.nombre}}</td>
+              <td class="text-end align-middle">{{empleado.salario.salBasico}}</td>
+              <td class="text-end align-middle">{{empleado.salario.salNeto}}</td>
+              <td class="text-center">
+                  <button type="button" class="btn btn-primary btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#modalCalcular" (click)="calcularPago(empleado.id)">
+                      <fa-icon icon="dollar-sign" size="sm"></fa-icon>
+                  </button>
+                  <button type="button" class="btn btn-success btn-sm mx-1" (click)="exportarPagoExcel()">
+                      <fa-icon icon="file-excel" size="sm"></fa-icon>
+                  </button>
+              </td>
+              
+            </tr>
+          }
+          
+        </tbody>
+      </table>
+
+<!-- Modal New-->
+<div class="modal fade" id="modalCalcular" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Calcular Pago</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row d-flex align-items-center justify-content-center">
+          <div class="col-md-3 d-flex align-items-start flex-column">
+            <h4 class="fw-bold mt-1">Codigo:</h4>
+            <input type="text" class="form-control custom-input mx-2" name="codigo" [ngModel]="empleado.codigo" disabled>
+          </div>
+          <div class="col-md-5 d-flex align-items-start flex-column">
+            <h4 class="fw-bold mt-1">Empleado:</h4>
+            <input type="text" class="form-control custom-input mx-2" name="nombreCompleto" [ngModel]="empleado.nombreCompleto" disabled>
+          </div>
+          <div class="col-md-3 d-flex align-items-start flex-column">
+            <h4 class="fw-bold mt-1">Salario Basico:</h4>
+            <input type="text" class="form-control custom-input mx-2" name="salBasico" [ngModel]="empleado.salario.salBasico" disabled>
+          </div>
+        </div>
+        <div class="row mt-3 d-flex align-items-center justify-content-center">
+          <div class="div col-md-10">
+            <table class="table table-bordered border-black table-light table-sm">
+              <thead>
+                <tr class="table-primary">
+                  <th scope="col" class="col-1 text-center">Beneficios</th>
+                  <th scope="col" class="col-1 text-center">Monto</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <th scope="row" class="align-middle">Bono General</th>
+                    <td class="align-middle">{{salarioNeto.bonoGeneral}}</td>                
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Gratificacion Julio y Diciembre</th>
+                    <td class="align-middle">{{salarioNeto.gratificacionJD}}</td>                
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Gratificacion por antiguedad en la empresa (mayores de un año)</th>
+                    <td class="align-middle">{{salarioNeto.bonoAntiguedad}}</td>                
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Gratificacion por edad (mayores de 40)</th>
+                    <td class="align-middle">{{salarioNeto.bonoEdad}}</td>                
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Salud 4%</th>
+                    <td class="align-middle"> - {{salarioNeto.salud}}</td>                
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">Impuesto 12.5%</th>
+                    <td class="align-middle"> - {{salarioNeto.impuesto}}</td>                
+                  </tr>
+                  <tr>
+                    <th scope="row" class="align-middle">CTS Liquidación por termino de contrato</th>
+                    <td class="align-middle">{{salarioNeto.cts}}</td>                
+                  </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                    <th colspan="2" class="text-center">Salario Neto = {{salarioNeto.neto}}</th>
+                </tr>
+            </tfoot>
+            </table>
+          </div>
+          
+        </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="guardarPago()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+

@@ -1,0 +1,30 @@
+.custom-input {
+    border-radius: 10px;
+    border: 2px solid #007bff; /* Bootstrap's primary color */
+    padding: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .custom-input:focus {
+    outline: none;
+    border-color: #ff9900; /* Custom focus color */
+    box-shadow: 0 0 5px rgba(255, 153, 0, 0.5); /* Custom focus shadow */
+  }
+
+  .custom-select {
+    appearance: none;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 14px;
+    border: 2px solid #007bff; /* Bootstrap's primary color */
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+
+  .custom-select:focus {
+    outline: none;
+    border-color: #ff9900; /* Custom focus color */
+    box-shadow: 0 0 5px rgba(255, 153, 0, 0.5); /* Custom focus shadow */
+  }
